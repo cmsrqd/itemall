@@ -12,19 +12,14 @@ export const upload = (file): string => {
     // 创建文件夹
     fs.mkdir(dir, () => console.log('文件夹创建成功'));
   }
-  const fileName = nanoid() + extname(file.originalname)
+  const fileName = nanoid() + extname(file.originalname);
   // 文件保存路径
-  const path = join(
-    __dirname,
-    '..',
-    'upload',
-    fileName
-  );
+  const path = join(__dirname, '..', 'upload', fileName);
   // 创建文件输出流
   const writeStream = fs.createWriteStream(path);
   // 写入文件
   writeStream.write(file.buffer);
   // 关闭流
   writeStream.close();
-  return 'http://127.0.0.1:3000/'+fileName;
+  return 'http://127.0.0.1:3000/' + fileName;
 };

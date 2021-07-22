@@ -7,7 +7,7 @@ import { HomeModule } from './module/HomeModule';
 import { CategoryModule } from './module/CategoryModule';
 import { CartModule } from './module/CartModule';
 import { OrderModule } from './module/OrderModule';
-import { ServeStaticModule } from "@nestjs/serve-static";
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [

@@ -38,8 +38,7 @@ export class OrderService {
       const goods = await this.goodsRepository.findOne(item.gid);
       orderDesc.title = goods.title;
       orderDesc.price = goods.price;
-      const { img } = JSON.parse(goods.show);
-      orderDesc.img = img;
+      orderDesc.show = goods.show;
       orderDesc.num = item.num;
       orderDesc.oid = order.id;
       await this.orderDescRepository.save(orderDesc);
@@ -57,7 +56,9 @@ export class OrderService {
    */
   async query(body, uid): Promise<Order[]> {
     // 创建QueryBuilder
-    const db = this.orderRepository.createQueryBuilder('order');
+    const db = this.orderRepository
+      .createQueryBuilder('order')
+      .orderBy('order.id', 'DESC');
     // 判断body中是否有开始时间和结束时间
     if (body.startTime && body.endTime) {
       const { startTime, endTime } = body;
@@ -86,7 +87,7 @@ export class OrderService {
    * @param body
    * @param req
    */
-  async modify(body, uid): Promise<string> {
+  async modify(body): Promise<string> {
     const { id } = body;
     const { affected } = await this.orderRepository.update(id, {
       status: ORDER_STATUS.CANCEL,
@@ -117,8 +118,20 @@ export class OrderService {
    * @param body
    * @param uid
    */
-  async del(body, uid): Promise<string> {
+  async del(body): Promise<string> {
     const { id } = await this.orderRepository.softRemove({ id: body.id });
     return id ? '删除成功' : '删除失败';
+  }
+
+  /**
+   * 根据订单id查询
+   * @param id
+   */
+  async queryById(id: number) {
+    const order = await this.orderRepository.findOne(id);
+    order.orderDesc = await this.orderDescRepository.find({
+      oid: order.id,
+    });
+    return order;
   }
 }

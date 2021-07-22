@@ -38,8 +38,8 @@ export class OrderController {
     summary: '取消订单',
   })
   @Post('cancel')
-  async modify(@Body() body, @Req() req): Promise<string> {
-    return this.service.modify(body, req.auth_user);
+  async modify(@Body() body): Promise<string> {
+    return this.service.modify(body);
   }
 
   @ApiOperation({
@@ -54,7 +54,15 @@ export class OrderController {
     summary: '删除订单',
   })
   @Post('del')
-  async del(@Body() body, @Req() req): Promise<string> {
-    return this.service.del(body, req.auth_user);
+  async del(@Body() body): Promise<string> {
+    return this.service.del(body);
+  }
+
+  @ApiOperation({
+    summary: '根据订单id查询',
+  })
+  @Get('queryOne')
+  async queryById(@Query('id') id: number): Promise<Order> {
+    return this.service.queryById(id);
   }
 }
