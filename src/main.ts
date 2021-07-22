@@ -16,9 +16,6 @@ async function bootstrap() {
 
   // 跨域
   app.enableCors();
-  // 静态文件
-  app.useStaticAssets('upload');
-
   // 全局拦截器 => 处理成功操作
   app.useGlobalInterceptors(new ResultInterceptor());
   // 全局异常过滤器 => 失败操作，或者异常问题

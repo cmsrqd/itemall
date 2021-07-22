@@ -4,6 +4,7 @@ import {
   Get,
   Post,
   Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -29,8 +30,8 @@ export class OrderController {
     summary: '查询订单',
   })
   @Get()
-  async query(@Body() body, @Req() req): Promise<Order[]> {
-    return this.service.query(body, req.auth_user);
+  async query(@Query() query, @Req() req): Promise<Order[]> {
+    return this.service.query(query, req.auth_user);
   }
 
   @ApiOperation({

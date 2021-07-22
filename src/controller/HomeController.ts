@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { HomeService } from '../service/HomeService';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Goods } from '../entity/Goods';
@@ -34,5 +34,13 @@ export class HomeController {
   @Get('detail')
   async queryDetail(@Query('iid') iid: string): Promise<Detail> {
     return this.service.queryDetail(iid);
+  }
+
+  @ApiOperation({
+    summary: '根据id查询商品',
+  })
+  @Get('/good')
+  async queryGoodsById(@Query('id') id: number[]): Promise<Goods[]> {
+    return this.service.queryGoodsById(id);
   }
 }

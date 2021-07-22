@@ -20,7 +20,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     let message = exception.toString();
     message = message.replace('Error: ', '');
-
     response.status(status).json(Result.fail(status, message));
   }
 }

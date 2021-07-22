@@ -26,6 +26,7 @@ export class HomeService {
   /**
    * 查询首页数据
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   async queryHome(): Promise<Object> {
     // 获取轮播数据
     const banner = await this.bannerRepository.find();
@@ -38,7 +39,6 @@ export class HomeService {
    * @param query
    */
   async queryGoods(type = 'pop', page = 1): Promise<Goods[]> {
-    // const { type, page } = query;
     // 计算起始位置
     const skip = (page - 1) * LIMIT.PAGE_SIZE;
     return await this.goodsRepository.find({
@@ -54,5 +54,13 @@ export class HomeService {
    */
   async queryDetail(iid: string): Promise<Detail> {
     return await this.detailRepository.findOne({ iid });
+  }
+
+  /**
+   * 根据id查询
+   * @param id
+   */
+  async queryGoodsById(id: number[]): Promise<Goods[]> {
+    return await this.goodsRepository.findByIds(id);
   }
 }
